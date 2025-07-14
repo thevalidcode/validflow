@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.5](https://github.com/thevalidcode/validflow/compare/v1.0.4...v1.0.5) (2025-07-14)
+
+
+### Bug Fixes
+
+* updated build for mac ([de5ae95](https://github.com/thevalidcode/validflow/commit/de5ae952e8df37d2bc4159a9e835a306bd13f429))
+
 ### [1.0.4](https://github.com/thevalidcode/validflow/compare/v1.0.3...v1.0.4) (2025-07-14)
 
 

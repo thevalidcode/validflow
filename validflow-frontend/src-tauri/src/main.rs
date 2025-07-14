@@ -1,41 +1,30 @@
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
-
-use tauri::{SystemTray, SystemTrayMenu, SystemTrayEvent, CustomMenuItem, Manager};
-use tauri_plugin_shell::init as shell_plugin;
+use tauri::{
+  Builder, Manager,
+  tray::{TrayIconBuilder, TrayMenu, TrayEvent},
+  AppHandle, RunEvent,
+};
 
 fn main() {
-  let quit = CustomMenuItem::new("quit", "Quit");
-  let show = CustomMenuItem::new("show", "Show App");
-
-  let tray_menu = SystemTrayMenu::new()
-    .add_item(show)
-    .add_item(quit);
-
-  let system_tray = SystemTray::new().with_menu(tray_menu);
-
-  tauri::Builder::default()
-    .plugin(shell_plugin())
-    .system_tray(system_tray)
-    .on_system_tray_event(|app, event| match event {
-      SystemTrayEvent::MenuItemClick { id, .. } => {
-        match id.as_str() {
-          "quit" => std::process::exit(0),
-          "show" => {
-            let window = app.get_window("main").unwrap();
-            window.show().unwrap();
+  Builder::default()
+    .setup(|app| {
+      let tray_menu = TrayMenu::builder()
+        .item("quit", "Quit")
+        .build(app)?;
+      let tray = TrayIconBuilder::new()
+        .menu(tray_menu)
+        .build(app)?;
+      // optional: store tray handle in state or listen to events
+      Ok(())
+    })
+    .run(tauri::generate_context!(), |app_handle, event| {
+      if let RunEvent::TrayEvent { event, .. } = event {
+        match event {
+          TrayEvent::MenuItemClick(id) if id == "quit" => {
+            app_handle.exit(0);
           }
           _ => {}
         }
       }
-      _ => {}
     })
-    .on_window_event(|event| {
-      if let tauri::WindowEvent::CloseRequested { api, .. } = event.event() {
-        // Hide the app instead of quitting
-        event.window().hide().unwrap();
-        api.prevent_close();
-      }
-    })
-    .run(tauri::generate_context!())
-    .expect("error while running tauri application");
+    .expect("error while running tauri app");
 }

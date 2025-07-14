@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.9](https://github.com/thevalidcode/validflow/compare/v1.0.8...v1.0.9) (2025-07-14)
+
+
+### Bug Fixes
+
+* correct libsoup package name in Linux dependencies ([c23b7db](https://github.com/thevalidcode/validflow/commit/c23b7db139a580f869fa8d980ee7438faec4ba87))
+
 ### [1.0.8](https://github.com/thevalidcode/validflow/compare/v1.0.7...v1.0.8) (2025-07-14)
 
 

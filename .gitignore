@@ -1,0 +1,14 @@
+# Frontend files and directories
+validflow-frontend/node_modules
+validflow-frontend/package-lock.json
+validflow-frontend/dist
+
+# Backend files and directories
+__pycache__/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+node_modules
+package-lock.json
+.env

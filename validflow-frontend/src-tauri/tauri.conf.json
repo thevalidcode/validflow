@@ -1,0 +1,24 @@
+{
+  "identifier": "com.validflow.app",
+  "productName": "ValidFlow",
+  "version": "1.0.0",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:5173"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "ValidFlow",
+        "width": 1200,
+        "height": 800,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ]
+  },
+  "bundle": {
+    "active": true,
+    "icon": ["icons/validflow.ico"]
+  }
+}

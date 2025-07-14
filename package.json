@@ -1,0 +1,27 @@
+{
+  "name": "validflow",
+  "version": "1.0.0",
+  "description": "ValidFlow is a desktop software that automatically helps it's user to arrange their'files, folders and documents.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "standard-version && git push --follow-tags",
+    "dev:frontend": "cd validflow-frontend && npm run dev",
+    "dev:backend": "cd validflow-backend && uvicorn app.main:app --reload",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\""
+  },
+  "keywords": [
+    "auto-arrange",
+    "folders",
+    "files",
+    "arrange",
+    "sort"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "concurrently": "^9.2.0",
+    "standard-version": "^9.5.0"
+  }
+}

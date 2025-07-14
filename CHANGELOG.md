@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.8](https://github.com/thevalidcode/validflow/compare/v1.0.7...v1.0.8) (2025-07-14)
+
+
+### Bug Fixes
+
+* linux dependency ([6561888](https://github.com/thevalidcode/validflow/commit/656188841c223af2347dbde81d13e2496251b747))
+
 ### [1.0.7](https://github.com/thevalidcode/validflow/compare/v1.0.6...v1.0.7) (2025-07-14)
 
 

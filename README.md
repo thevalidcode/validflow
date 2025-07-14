@@ -1,138 +1,160 @@
-# ValidFlow: Intelligent File Organization for Desktop
+# ValidFlow: Intelligent File Organization
 
-ValidFlow is a robust desktop application designed to streamline your digital workspace. 📁 It intelligently organizes files, folders, and documents, bringing order and efficiency to your daily workflow. Say goodbye to clutter and hello to a perfectly structured digital environment!
+Welcome to **ValidFlow**, a seamless desktop application engineered to bring order to your digital life! Tired of cluttered download folders or scattered documents? ValidFlow silently works in the background, automatically categorizing and moving your files into designated directories, ensuring your digital workspace remains pristine. It's built for efficiency, designed to make file management effortless and truly hands-free.
 
 ## 🚀 Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+To get ValidFlow up and running on your local machine, follow these straightforward steps.
 
 ### Prerequisites
 
 Before you begin, ensure you have the following installed:
 
-- **Node.js**: [LTS version recommended](https://nodejs.org/en)
-- **npm**: Comes bundled with Node.js.
-- **Python**: Version 3.12 (as specified in the `Pipfile`).
-- **Pipenv**: Python package installer and dependency manager. Install it globally using `pip install pipenv`.
-- **Rust**: For Tauri development. Install via [rustup](https://rustup.rs/).
+- **Node.js & npm**: For the frontend and project orchestration. You can download it from [nodejs.org](https://nodejs.org/).
+- **Python 3.12+**: For the backend services. Get it from [python.org](https://www.python.org/downloads/).
+- **Pipenv**: For Python dependency management. Install with `pip install pipenv`.
+- **Rustup**: For Tauri, the desktop framework. Install with `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh` (Linux/macOS) or download the installer (Windows) from [rustup.rs](https://rustup.rs/).
 
 ### Installation
 
-Follow these steps to set up ValidFlow on your local machine:
-
-1.  **Clone the Repository**
-    Start by cloning the project repository to your local machine:
-
+1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/your-username/validflow.git # Replace with your actual repository URL
+    git clone <repository-url>
+    ```
+2.  **Navigate into the project directory**:
+    ```bash
     cd validflow
     ```
-
-2.  **Install Root Dependencies**
-    This project uses `concurrently` to efficiently manage both the frontend and backend development servers. Install these root-level dependencies:
-
-    ```bash
-    npm install
-    ```
-
-3.  **Set Up the Frontend**
-    Navigate into the `validflow-frontend` directory and install its specific Node.js dependencies:
-
-    ```bash
-    cd validflow-frontend
-    npm install
-    ```
-
-4.  **Set Up the Backend**
-    Move into the `validflow-backend` directory and install Python dependencies using Pipenv:
-    ```bash
-    cd ../validflow-backend
-    pipenv install
-    ```
-    _(A note on the backend build: The `build-backend.py` script uses PyInstaller to compile the `start.py` script into a standalone binary. This binary is then placed in the Tauri `src-tauri/bin` directory as a sidecar. This process is generally handled automatically by Tauri's build command, so you typically won't need to run `build-backend.py` manually during development unless you're specifically updating the sidecar binary.)_
+3.  **Set up the backend**:
+    - Change into the backend directory:
+      ```bash
+      cd validflow-backend
+      ```
+    - Install Python dependencies using Pipenv:
+      ```bash
+      pipenv install
+      ```
+    - Activate the Pipenv shell:
+      ```bash
+      pipenv shell
+      ```
+    - _(You can now return to the root directory for combined development)_
+      ```bash
+      exit # Exit pipenv shell temporarily if you want to run combined dev from root
+      cd ..
+      ```
+4.  **Set up the frontend**:
+    - Change into the frontend directory:
+      ```bash
+      cd validflow-frontend
+      ```
+    - Install Node.js dependencies:
+      ```bash
+      npm install
+      ```
+    - Build the Rust/Tauri core (this may take a moment):
+      ```bash
+      npm run tauri build
+      ```
+    - _(You can now return to the root directory for combined development)_
+      ```bash
+      cd ..
+      ```
 
 ## 🏃‍♀️ Usage
 
-To launch ValidFlow locally in development mode, which activates both the frontend and backend services:
+Once all dependencies are installed, you can launch ValidFlow with a single command from the root project directory:
 
-1.  **Start the Application**
-    From the root directory of your project (`validflow`), execute the main development script:
-    ```bash
-    npm run dev
-    ```
-    This command will concurrently spin up the React frontend (powered by Vite) and the FastAPI backend (served by Uvicorn). Once both are running, the Tauri desktop application will automatically launch and establish a connection to these local services.
+```bash
+npm run dev
+```
 
-Currently, the application presents a foundational React interface and includes a basic `/health` endpoint on the backend to confirm successful service integration. Comprehensive file organization features are planned for future development cycles.
+This command leverages `concurrently` to start both the Python backend (FastAPI server and file watcher) and the React frontend.
 
-_(Note: Screenshots showcasing the application's functionality are currently in progress and will be added as the user interface matures.)_
+ValidFlow typically monitors your `Downloads` folder by default, automatically moving new files into categorized sub-folders within `~/Documents/ValidFlow` (e.g., `~/Documents/ValidFlow/Images`, `~/Documents/ValidFlow/Documents`). While the current UI is a landing page, the backend is actively classifying and logging file movements. Future updates will introduce a user interface for configuration and to view these logs directly.
 
 ## ✨ Features
 
-ValidFlow is being developed with a focus on delivering a powerful and seamless file management experience through key features:
+ValidFlow isn't just another file sorter; it's a smart assistant designed to keep your digital space organized effortlessly.
 
-- **Cross-Platform Desktop Experience**: Built using Tauri, ensuring native performance, a compact application size, and broad compatibility across Windows, macOS, and Linux.
-- **Automated File Organization**: Designed to intelligently categorize and move files based on customizable, user-defined rules, significantly reducing digital clutter. (This core functionality is actively under development.)
-- **Intuitive User Interface**: A modern and highly responsive frontend, meticulously crafted with React and TypeScript, to provide an effortless and engaging user experience.
-- **Robust Backend Service**: A reliable backend, developed with Python's FastAPI, handles all core logic and complex operations, guaranteeing efficient and scalable performance.
-- **Optimized Development Workflow**: Leverages cutting-edge tools like Vite for incredibly fast frontend development feedback loops and ESLint for maintaining strict code quality and consistency.
+- **Automatic File Categorization**: Intelligently classifies files (images, videos, documents, music, archives, installers, and others) based on MIME types and file extensions.
+- **Real-time Folder Monitoring**: Continuously watches your designated download directory (default: `~/Downloads`) for newly created files using `watchdog`.
+- **Smart File Movement**: Automatically moves categorized files to a structured destination directory (default: `~/Documents/ValidFlow/{Category}`). Files are only moved if a duplicate doesn't already exist in the target location, preventing unnecessary overwrites.
+- **Cross-Platform Desktop Application**: Built with Tauri, providing a native, lightweight, and performant desktop experience on Windows, macOS, and Linux.
+- **Backend API**: A FastAPI backend serves application status and historical file movement logs, paving the way for rich UI features.
+- **Internal File Logging**: Maintains a local SQLite database (`file_logs.db`) to record all categorized file movements, including file name, category, and timestamp.
 
 ## 🛠️ Technologies Used
 
-| Category          | Technology                                                         | Description                                                                                                              |
-| :---------------- | :----------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
-| **Frontend**      | [React](https://react.dev/)                                        | A declarative, component-based JavaScript library for building user interfaces.                                          |
-|                   | [TypeScript](https://www.typescriptlang.org/)                      | A strongly typed superset of JavaScript that enhances code quality and maintainability.                                  |
-|                   | [Vite](https://vitejs.dev/)                                        | A blazing-fast build tool that provides an exceptional development experience for web projects.                          |
-|                   | [ESLint](https://eslint.org/)                                      | A powerful static code analysis tool that helps maintain code quality and consistency.                                   |
-| **Backend**       | [Python 3.12](https://www.python.org/)                             | The robust and versatile programming language serving as the backbone for the backend services.                          |
-|                   | [FastAPI](https://fastapi.tiangolo.com/)                           | A modern, high-performance web framework for building APIs with Python, known for its speed and ease of use.             |
-|                   | [Uvicorn](https://www.uvicorn.org/)                                | An Asynchronous Server Gateway Interface (ASGI) web server, used to serve the FastAPI application.                       |
-|                   | [Pipenv](https://pipenv.pypa.io/en/latest/)                        | A dependable Python development workflow tool that manages dependencies efficiently via `Pipfile`.                       |
-|                   | [PyInstaller](https://pyinstaller.org/)                            | A utility to package Python applications into standalone executables, simplifying distribution.                          |
-| **Desktop Shell** | [Tauri](https://tauri.app/)                                        | A groundbreaking framework for building highly optimized, cross-platform desktop applications using web technologies.    |
-|                   | [Rust](https://www.rust-lang.org/)                                 | The foundational language powering Tauri's core, offering unparalleled performance, safety, and concurrency.             |
-| **Dev Tools**     | [Concurrently](https://www.npmjs.com/package/concurrently)         | A command-line tool that allows running multiple scripts or commands simultaneously, perfect for full-stack development. |
-|                   | [Standard Version](https://www.conventionalcommits.org/en/v1.0.0/) | A tool that automates versioning and changelog generation, adhering to the Conventional Commits specification.           |
+ValidFlow is a full-stack desktop application built with a modern tech stack, combining the strengths of Python, JavaScript, and Rust.
+
+| Component             | Technology         | Description                                                                                         |
+| :-------------------- | :----------------- | :-------------------------------------------------------------------------------------------------- |
+| **Backend**           | Python             | Primary language for backend logic and file operations.                                             |
+|                       | FastAPI            | High-performance web framework for the backend API.                                                 |
+|                       | Uvicorn            | ASGI server for FastAPI.                                                                            |
+|                       | Watchdog           | Python library for real-time file system event monitoring.                                          |
+|                       | PyInstaller        | Used to bundle the Python backend into a single executable.                                         |
+|                       | SQLite             | Lightweight, file-based database for logging file movements.                                        |
+| **Frontend**          | React              | Declarative JavaScript library for building user interfaces.                                        |
+|                       | TypeScript         | Superset of JavaScript that adds static types.                                                      |
+|                       | Vite               | Fast and lightweight build tool for frontend development.                                           |
+|                       | Tailwind CSS       | Utility-first CSS framework for rapid UI development.                                               |
+|                       | ESLint             | Static code analysis tool for identifying problematic patterns.                                     |
+|                       | React Router Dom   | Declarative routing for React applications.                                                         |
+| **Desktop Framework** | Tauri              | Cross-platform framework for building desktop apps with web frontends (Rust backend, web frontend). |
+|                       | tauri-plugin-shell | Tauri plugin to execute shell commands (used to start Python backend).                              |
+| **Tooling**           | Concurrently       | Utility to run multiple commands concurrently (for dev setup).                                      |
+|                       | Standard Version   | Automates versioning and changelog generation.                                                      |
 
 ## 🤝 Contributing
 
-Your contributions are highly valued and can significantly enhance ValidFlow! If you're eager to contribute, please review these guidelines:
+ValidFlow is an open-source project, and contributions are absolutely welcome! If you have ideas for new features, bug fixes, or improvements, please don't hesitate to contribute.
 
-- ✨ **Fork the Repository**: Begin by forking the `validflow` repository to your personal GitHub account.
-- 🌿 **Create a New Branch**: For any new features, enhancements, or bug fixes, please create a new branch from `main`. Use a clear and descriptive naming convention (e.g., `feat/implement-rule-engine` or `fix/file-dialog-issue`).
-- 💡 **Implement Your Changes**: Write clean, well-structured, and well-commented code. Ensure that your modifications align with the project's existing architectural patterns and coding style.
-- 🧪 **Test Thoroughly**: If your changes introduce new functionality or alter existing behavior, please add new tests or update relevant tests to ensure everything works as expected.
-- 📚 **Update Documentation**: Should your contributions affect the application's functionality, installation, or usage, remember to update the corresponding sections of this README or any other relevant documentation.
-- ⬆️ **Commit and Push**: Commit your changes with concise and informative commit messages. We encourage following the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification (e.g., `feat: add drag-and-drop support for folders`).
-- 🔄 **Open a Pull Request**: Finally, submit a pull request to the `main` branch of the original repository. Provide a comprehensive description of your changes and reference any related issues.
+Here’s how you can get involved:
 
-Thank you for your valuable contributions to ValidFlow!
+- **Fork the repository**: Start by forking the `validflow` repository to your GitHub account.
+- **Create a new branch**: For any new feature or bug fix, create a dedicated branch.
+  ```bash
+  git checkout -b feature/your-feature-name
+  ```
+  or
+  ```bash
+  git checkout -b bugfix/issue-description
+  ```
+- **Make your changes**: Implement your features or fixes, ensuring your code adheres to the project's style and conventions.
+- **Test your changes**: Before submitting, make sure your changes haven't introduced any regressions and work as expected.
+- **Commit your changes**: Write clear and concise commit messages.
+  ```bash
+  git commit -m "feat: Add new awesome feature"
+  ```
+- **Push to your fork**:
+  ```bash
+  git push origin feature/your-feature-name
+  ```
+- **Open a Pull Request**: Submit a pull request from your branch to the `main` branch of the original repository. Provide a detailed description of your changes.
 
-## 📄 License
+We appreciate your contributions and look forward to reviewing them!
 
-This project is licensed under the ISC License, as indicated in the `package.json` file.
+## 📜 License
 
-## 🧑‍💻 Author
+This project is licensed under the ISC License. Please refer to the `LICENSE` file in the root of the repository for the full license text. (Note: A separate `LICENSE` file was not provided in the submitted context, so please ensure it's added to your repository).
+
+## 🧑‍💻 Author Info
 
 **Ibe Precious**
-
-Connect with me!
 
 - **GitHub**: [thevalidcode](https://github.com/thevalidcode)
 - **LinkedIn**: [thevalidcode](https://www.linkedin.com/thevalidcode)
 - **Twitter**: [thevalidcode](https://twitter.com/thevalidcode)
 
----
+## 🏅 Badges
 
-## Badges
-
-[![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![Tauri](https://img.shields.io/badge/Tauri-24C783?style=for-the-badge&logo=tauri&logoColor=white)](https://tauri.app/)
-[![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)
-[![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)](https://eslint.org/)
-[![npm](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white)](https://www.npmjs.com/)
-[![GitHub Workflow Status](https://img.shields.io/badge/Build%20Status-Coming%20Soon-orange?style=for-the-badge)](https://github.com/your-username/validflow/actions)
+[![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Tauri](https://img.shields.io/badge/Tauri-24C8D7?style=for-the-badge&logo=tauri&logoColor=white)](https://tauri.app/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![ISC License](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+[![Readme was generated by Dokugen](https://img.shields.io/badge/Readme%20was%20generated%20by-Dokugen-brightgreen)](https://www.npmjs.com/package/dokugen)

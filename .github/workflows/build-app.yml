@@ -28,6 +28,11 @@ jobs:
         run: |
           pip install pipenv
           pipenv install --deploy --ignore-pipfile
+          
+      - name: Install missing macOS dependencies
+        if: runner.os == 'macOS'
+        working-directory: validflow-backend
+        run: pipenv install macholib
 
       - name: Build Backend Binary
         working-directory: validflow-backend

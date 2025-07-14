@@ -35,7 +35,7 @@ jobs:
           pipenv run python build-backend.py
 
       - name: Upload Backend Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: backend-${{ matrix.os }}
           path: validflow-frontend/src-tauri/bin/start*
@@ -82,10 +82,14 @@ jobs:
             libayatana-appindicator3-dev librsvg2-dev
 
       - name: Download Backend Binary
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: backend-${{ matrix.os }}
           path: validflow-frontend/src-tauri/bin
+          
+      - name: Make Backend Executable (non-Windows)
+        if: runner.os != 'Windows'
+        run: chmod +x validflow-frontend/src-tauri/bin/start
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable

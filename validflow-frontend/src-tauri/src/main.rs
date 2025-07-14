@@ -1,28 +1,27 @@
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
 use tauri::{
   Builder, Manager,
-  tray::{TrayIconBuilder, TrayMenu, TrayEvent},
-  AppHandle, RunEvent,
+  tray::{TrayIconBuilder, TrayMenuBuilder, TrayEvent},
 };
 
 fn main() {
   Builder::default()
     .setup(|app| {
-      let tray_menu = TrayMenu::builder()
-        .item("quit", "Quit")
+      let tray_menu = TrayMenuBuilder::new()
+        .item("quit".to_string(), "Quit".to_string())
         .build(app)?;
-      let tray = TrayIconBuilder::new()
+      TrayIconBuilder::new()
         .menu(tray_menu)
         .build(app)?;
-      // optional: store tray handle in state or listen to events
       Ok(())
     })
     .run(tauri::generate_context!(), |app_handle, event| {
-      if let RunEvent::TrayEvent { event, .. } = event {
-        match event {
-          TrayEvent::MenuItemClick(id) if id == "quit" => {
+      if let tauri::RunEvent::TrayEvent { event, .. } = event {
+        if let TrayEvent::MenuItemClick(id) = event {
+          if id == "quit" {
             app_handle.exit(0);
           }
-          _ => {}
         }
       }
     })

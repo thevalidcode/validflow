@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: backend-${{ matrix.os }}
-          path: validflow-frontend/src-tauri/bin/start*
+          path: validflow-frontend/src-tauri/bin/start-*
 
   build-and-release-app:
     needs: build-backend

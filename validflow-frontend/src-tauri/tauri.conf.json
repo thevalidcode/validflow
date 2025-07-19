@@ -24,7 +24,7 @@
     "active": true,
     "icon": ["icons/validflow.ico"],
     "resources": [],
-    "externalBin": ["start"],
+    "externalBin": ["bin/start"],
     "macOS": {
       "entitlements": null,
       "exceptionDomain": "",
@@ -40,7 +40,7 @@
   },
   "plugins": {
     "shell": {
-      "sidecar": true
+      "sidecar": "bin/start"
     }
   }
 }

@@ -1,11 +1,11 @@
 {
   "identifier": "com.validflow.app",
-  "productName": "ValidFlow",
-  "version": "1.0.0",
   "build": {
     "beforeDevCommand": "npm run dev",
-    "devUrl": "http://localhost:5173"
+    "devUrl": "http://localhost:5173",
+    "frontendDist": "../dist"
   },
+
   "app": {
     "windows": [
       {
@@ -15,10 +15,32 @@
         "resizable": true,
         "fullscreen": false
       }
-    ]
+    ],
+    "security": {
+      "csp": null
+    }
   },
   "bundle": {
     "active": true,
-    "icon": ["icons/validflow.ico"]
+    "icon": ["icons/validflow.ico"],
+    "resources": [],
+    "externalBin": ["start"],
+    "macOS": {
+      "entitlements": null,
+      "exceptionDomain": "",
+      "frameworks": [],
+      "minimumSystemVersion": "10.13",
+      "signingIdentity": null
+    },
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": ""
+    }
+  },
+  "plugins": {
+    "shell": {
+      "sidecar": true
+    }
   }
 }

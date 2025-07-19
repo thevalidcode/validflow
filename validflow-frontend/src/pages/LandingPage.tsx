@@ -1,13 +1,13 @@
-import React from 'react'
+import React from "react";
 
 const LandingPage = () => {
   return (
-    <div className='bg-green-200 w-44'>
-        Hellow
+    <div className="bg-green-200 w-full">
+      Hello. This is a test to tell you that it's working.
     </div>
-  )
-}
+  );
+};
 
-LandingPage.propTypes = {}
+LandingPage.propTypes = {};
 
-export default LandingPage
+export default LandingPage;

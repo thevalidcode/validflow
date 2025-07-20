@@ -2,8 +2,8 @@ name: Build and Release ValidFlow
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - "v*.*.*"
 
 permissions:
   contents: write
@@ -122,18 +122,18 @@ jobs:
         working-directory: validflow-frontend
         run: npm run tauri build
 
-      # - name: Upload Release Artifacts
-      #   uses: softprops/action-gh-release@v2
-      #   with:
-      #     tag_name: ${{ github.ref_name }}
-      #     name: Release ${{ github.ref_name }}
-      #     files: |
-      #       validflow-frontend/src-tauri/target/release/*.exe
-      #       validflow-frontend/src-tauri/target/release/bundle/**/*.msi
-      #       validflow-frontend/src-tauri/target/release/bundle/**/*.dmg
-      #       validflow-frontend/src-tauri/target/release/bundle/**/*.app
-      #       validflow-frontend/src-tauri/target/release/bundle/**/*.AppImage
-      #       validflow-frontend/src-tauri/target/release/bundle/**/*.deb
-      #       validflow-frontend/src-tauri/target/release/bundle/**/*.rpm
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Release Artifacts
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          files: |
+            validflow-frontend/src-tauri/target/release/*.exe
+            validflow-frontend/src-tauri/target/release/bundle/**/*.msi
+            validflow-frontend/src-tauri/target/release/bundle/**/*.dmg
+            validflow-frontend/src-tauri/target/release/bundle/**/*.app
+            validflow-frontend/src-tauri/target/release/bundle/**/*.AppImage
+            validflow-frontend/src-tauri/target/release/bundle/**/*.deb
+            validflow-frontend/src-tauri/target/release/bundle/**/*.rpm
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

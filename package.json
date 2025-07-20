@@ -1,6 +1,6 @@
 {
   "name": "validflow",
-  "version": "1.0.11",
+  "version": "1.0.0",
   "description": "ValidFlow is a desktop software that automatically helps it's user to arrange their'files, folders and documents.",
   "main": "index.js",
   "scripts": {

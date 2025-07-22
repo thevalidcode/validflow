@@ -128,7 +128,6 @@ jobs:
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
           files: |
-            validflow-frontend/src-tauri/target/release/*.exe
             validflow-frontend/src-tauri/target/release/bundle/**/*.msi
             validflow-frontend/src-tauri/target/release/bundle/**/*.dmg
             validflow-frontend/src-tauri/target/release/bundle/**/*.app

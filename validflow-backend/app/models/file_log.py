@@ -1,6 +1,7 @@
 import sqlite3
 from app.core.config import settings
 
+settings.db_path.parent.mkdir(parents=True, exist_ok=True)
 
 def init_db():
     conn = sqlite3.connect(settings.db_path)

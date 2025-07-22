@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "release": "standard-version && git push --follow-tags",
-    "dev:frontend": "cd validflow-frontend && npm run dev",
+    "dev:frontend": "cd validflow-frontend && npm run tauri dev",
     "dev:backend": "cd validflow-backend && uvicorn app.main:app --reload",
     "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\""
   },

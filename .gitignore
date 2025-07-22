@@ -5,7 +5,8 @@ validflow-frontend/dist
 
 # Backend files and directories
 __pycache__/
-
+validflow-backend/build
+validflow-backend/start-x86_64-pc-windows-msvc.spec
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

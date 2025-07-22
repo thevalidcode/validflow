@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/thevalidcode/validflow/compare/v1.1.2...v1.2.0) (2025-07-22)
+
+
+### Features
+
+* update version syncing to include tauri.conf.json and enhance smart_move function with logging and retries ([88b77d1](https://github.com/thevalidcode/validflow/commit/88b77d144fcc5ee27fc5191617004270ba3dbecd))
+
 ### [1.1.2](https://github.com/thevalidcode/validflow/compare/v1.1.1...v1.1.2) (2025-07-22)
 
 ### [1.1.1](https://github.com/thevalidcode/validflow/compare/v1.1.0...v1.1.1) (2025-07-22)

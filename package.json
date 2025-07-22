@@ -4,11 +4,11 @@
   "description": "ValidFlow is a desktop software that automatically helps it's user to arrange their'files, folders and documents.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "release": "standard-version && git push --follow-tags",
+    "test": "echo \"No tests defined. Please add test scripts.\" && exit 1",
+    "release": "standard-version && node update-cargo-version.js && git add validflow-frontend/src-tauri/Cargo.toml && git commit -m \"chore: sync version to Cargo.toml\" && git push --follow-tags",
     "dev:frontend": "cd validflow-frontend && npm run tauri dev",
     "dev:backend": "cd validflow-backend && uvicorn app.main:app --reload",
-    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\""
+    "dev": "concurrently -n FRONTEND,BACKEND -c green,blue \"npm run dev:frontend\" \"npm run dev:backend\""
   },
   "keywords": [
     "auto-arrange",

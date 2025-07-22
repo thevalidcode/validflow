@@ -1,77 +1,6 @@
-# ValidFlow: Intelligent File Organization
+# ValidFlow
 
-Welcome to **ValidFlow**, a seamless desktop application engineered to bring order to your digital life! Tired of cluttered download folders or scattered documents? ValidFlow silently works in the background, automatically categorizing and moving your files into designated directories, ensuring your digital workspace remains pristine. It's built for efficiency, designed to make file management effortless and truly hands-free.
-
-## 🚀 Getting Started
-
-To get ValidFlow up and running on your local machine, follow these straightforward steps.
-
-### Prerequisites
-
-Before you begin, ensure you have the following installed:
-
-- **Node.js & npm**: For the frontend and project orchestration. You can download it from [nodejs.org](https://nodejs.org/).
-- **Python 3.12+**: For the backend services. Get it from [python.org](https://www.python.org/downloads/).
-- **Pipenv**: For Python dependency management. Install with `pip install pipenv`.
-- **Rustup**: For Tauri, the desktop framework. Install with `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh` (Linux/macOS) or download the installer (Windows) from [rustup.rs](https://rustup.rs/).
-
-### Installation
-
-1.  **Clone the repository**:
-    ```bash
-    git clone <repository-url>
-    ```
-2.  **Navigate into the project directory**:
-    ```bash
-    cd validflow
-    ```
-3.  **Set up the backend**:
-    - Change into the backend directory:
-      ```bash
-      cd validflow-backend
-      ```
-    - Install Python dependencies using Pipenv:
-      ```bash
-      pipenv install
-      ```
-    - Activate the Pipenv shell:
-      ```bash
-      pipenv shell
-      ```
-    - _(You can now return to the root directory for combined development)_
-      ```bash
-      exit # Exit pipenv shell temporarily if you want to run combined dev from root
-      cd ..
-      ```
-4.  **Set up the frontend**:
-    - Change into the frontend directory:
-      ```bash
-      cd validflow-frontend
-      ```
-    - Install Node.js dependencies:
-      ```bash
-      npm install
-      ```
-    - Build the Rust/Tauri core (this may take a moment):
-      ```bash
-      npm run tauri build
-      ```
-    - _(You can now return to the root directory for combined development)_
-      ```bash
-      cd ..
-      ```
-
-## 🏃‍♀️ Usage
-
-Once all dependencies are installed, you can launch ValidFlow with a single command from the root project directory:
-
-```bash
-npm run dev
-```
-
-This command leverages `concurrently` to start both the Python backend (FastAPI server and file watcher) and the React frontend.
-
-ValidFlow typically monitors your `Downloads` folder by default, automatically moving new files into categorized sub-folders within `~/Documents/ValidFlow` (e.g., `~/Documents/ValidFlow/Images`, `~/Documents/ValidFlow/Documents`). While the current UI is a landing page, the backend is actively classifying and logging file movements. Future updates will introduce a user interface for configuration and to view these logs directly.
+**ValidFlow** is a professional desktop automation tool that helps users intelligently organize and manage local files using customizable rules. It offers a modern UI, smart file classification, and a silent background experience.
 
 ## ✨ Features
 
@@ -107,38 +36,127 @@ ValidFlow is a full-stack desktop application built with a modern tech stack, co
 | **Tooling**           | Concurrently       | Utility to run multiple commands concurrently (for dev setup).                                      |
 |                       | Standard Version   | Automates versioning and changelog generation.                                                      |
 
+---
+
+## 🚀 For End Users (Download & Run)
+
+Visit the [Releases](https://github.com/thevalidcode/validflow/releases) section and download the latest release for your OS.
+
+### ⚠️ Windows/macOS Warning
+
+Both Windows Defender and macOS Gatekeeper may block the app with security warnings because it’s not code-signed.
+
+#### ✅ How to run it anyway:
+
+**Windows:**
+
+1. Right-click the `.exe` file.
+2. Click **Properties**.
+3. If you see a checkbox that says **"Unblock"**, check it.
+4. Click **OK**.
+5. Now double-click the file to run it.
+
+**macOS:**
+
+1. Control + Click (or Right-click) the `.app` file.
+2. Choose **Open**.
+3. In the dialog, click **Open** again.
+4. From then on, the app should open without further prompts.
+
+> This is expected behavior for unsigned apps. The app is safe to run if downloaded from the official release.
+
+---
+
+## 🛠 For Contributors (Clone & Build)
+
+### 📁 Folder Structure
+
+```
+validflow/
+├── validflow-frontend/       # React + Tauri frontend
+│   └── src-tauri/            # Tauri-specific Rust code
+├── validflow-backend/        # FastAPI backend
+└── shared/                   # Shared assets, constants
+```
+
+### 🔧 Setup Instructions
+
+#### 1. Prerequisites
+
+- Node.js >= 18
+- Rust & Cargo (for Tauri)
+- Python >= 3.9
+- Poetry (Python dependency manager)
+- Tauri CLI
+
+#### 2. Install Frontend Dependencies
+
+```bash
+cd validflow-frontend
+npm install
+```
+
+#### 3. Install Backend Dependencies
+
+```bash
+cd ../validflow-backend
+poetry install
+```
+
+#### 4. Run the App Locally
+
+- Terminal 1 (Frontend + Tauri):
+
+  ```bash
+  cd validflow-frontend
+  npm run tauri dev
+  ```
+
+- Terminal 2 (Backend API):
+
+  ```bash
+  cd validflow-backend
+  poetry run uvicorn app.main:app --reload
+  ```
+
+---
+
+## 🧪 Development Notes
+
+- Do not attempt to change app icons manually. Platform-specific icons are already included and managed.
+- This project does **not** use signed binaries; do not raise issues related to notarization or signing.
+
+---
+
+## 📏 Commit Guidelines
+
+This project follows [Conventional Commits](https://www.conventionalcommits.org):
+
+Examples:
+
+- `feat: add smart rule engine`
+- `fix: correct file watcher path`
+- `chore: update dependencies`
+
+Use meaningful commit messages to improve clarity and automate release versioning.
+
+---
+
 ## 🤝 Contributing
 
-ValidFlow is an open-source project, and contributions are absolutely welcome! If you have ideas for new features, bug fixes, or improvements, please don't hesitate to contribute.
+1. Fork this repo
+2. Create a new branch: `git checkout -b feat/your-feature`
+3. Commit using Conventional Commits
+4. Push to your fork: `git push origin feat/your-feature`
+5. Submit a pull request
 
-Here’s how you can get involved:
-
-- **Fork the repository**: Start by forking the `validflow` repository to your GitHub account.
-- **Create a new branch**: For any new feature or bug fix, create a dedicated branch.
-  ```bash
-  git checkout -b feature/your-feature-name
-  ```
-  or
-  ```bash
-  git checkout -b bugfix/issue-description
-  ```
-- **Make your changes**: Implement your features or fixes, ensuring your code adheres to the project's style and conventions.
-- **Test your changes**: Before submitting, make sure your changes haven't introduced any regressions and work as expected.
-- **Commit your changes**: Write clear and concise commit messages.
-  ```bash
-  git commit -m "feat: Add new awesome feature"
-  ```
-- **Push to your fork**:
-  ```bash
-  git push origin feature/your-feature-name
-  ```
-- **Open a Pull Request**: Submit a pull request from your branch to the `main` branch of the original repository. Provide a detailed description of your changes.
-
-We appreciate your contributions and look forward to reviewing them!
+---
 
 ## 📜 License
 
 This project is licensed under the ISC License. Please refer to the `LICENSE` file in the root of the repository for the full license text. (Note: A separate `LICENSE` file was not provided in the submitted context, so please ensure it's added to your repository).
+
+---
 
 ## 🧑‍💻 Author Info
 
@@ -157,3 +175,9 @@ This project is licensed under the ISC License. Please refer to the `LICENSE` fi
 [![Tauri](https://img.shields.io/badge/Tauri-24C8D7?style=for-the-badge&logo=tauri&logoColor=white)](https://tauri.app/)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![ISC License](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+
+## ✅ Final Note
+
+Once the app is launched, it works silently in the background to manage and automate your local files. No further input is required from the user.
+
+Enjoy using **ValidFlow**!

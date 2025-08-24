@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.4](https://github.com/thevalidcode/validflow/compare/v1.5.3...v1.5.4) (2025-08-24)
+
+
+### Bug Fixes
+
+* changed to tags instead of branches for releases ([4d8f902](https://github.com/thevalidcode/validflow/commit/4d8f902b44d901c0cdeaeaf1441e4599a5e2b235))
+
 ### [1.5.3](https://github.com/thevalidcode/validflow/compare/v1.5.2...v1.5.3) (2025-08-24)
 
 

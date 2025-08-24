@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"No tests defined. Please add test scripts.\" && exit 1",
-    "release": "standard-version --skip.tag && node update-tauri-version.js && git add package.json CHANGELOG.md validflow-frontend/src-tauri/Cargo.toml validflow-frontend/src-tauri/tauri.conf.json && git commit -m \"chore(release): bump version to $(node -p \"require('./package.json').version\")\" && git tag v$(node -p \"require('./package.json').version\") && git push --follow-tags",
+    "release": "standard-version --skip.tag && node update-tauri-version.js && git add package.json CHANGELOG.md validflow-frontend/src-tauri/Cargo.toml validflow-frontend/src-tauri/tauri.conf.json && node -e \"const v=require('./package.json').version; require('child_process').execSync(`git commit -m \\\"chore(release): bump version to ${v}\\\" && git tag v${v} && git push --follow-tags`, {stdio:'inherit'});\"",
     "dev:frontend:tauri": "cd validflow-frontend && npm run tauri dev",
     "dev:frontend": "cd validflow-frontend && npm run dev",
     "dev:backend": "cd validflow-backend && uvicorn app.main:app --reload",

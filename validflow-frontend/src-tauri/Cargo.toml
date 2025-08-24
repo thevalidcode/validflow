@@ -1,6 +1,6 @@
 [package]
 name = "validflow"
-version = "1.5.1"
+version = "1.5.2"
 description = "ValidFlow is a desktop software that automatically helps it's user to arrange their'files, folders and documents."
 authors = ["you"]
 license = ""

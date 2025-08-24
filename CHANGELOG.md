@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/thevalidcode/validflow/compare/v1.2.0...v1.3.0) (2025-08-24)
+
+
+### Features
+
+* Refactor Tauri application setup and integrate backend process management ([3c71964](https://github.com/thevalidcode/validflow/commit/3c719649cf449c78cca654aa5f9ac2c181b1a32a))
+
 ## [1.2.0](https://github.com/thevalidcode/validflow/compare/v1.1.2...v1.2.0) (2025-07-22)
 
 

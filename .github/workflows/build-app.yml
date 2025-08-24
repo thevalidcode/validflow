@@ -2,8 +2,8 @@ name: Build and Release ValidFlow
 
 on:
   push:
-    tags:
-      - "v*.*.*"
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -90,7 +90,6 @@ jobs:
       - name: Install required dependencies on macOS
         if: runner.os == 'macOS'
         run: |
-          rustup target add aarch64-apple-darwin
           rustup target add x86_64-apple-darwin
           xcode-select --install || true
 
@@ -118,7 +117,7 @@ jobs:
         working-directory: validflow-frontend
         run: npm run build
 
-      - name: Fix bundle_dmg.sh permissions (macOS only)
+      - name: Fix DMG script permissions (macOS only)
         if: runner.os == 'macOS'
         run: chmod +x validflow-frontend/src-tauri/target/release/bundle/dmg/bundle_dmg.sh || true
 
@@ -129,7 +128,7 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ""
         run: |
           if [ "${{ runner.os }}" == "macOS" ]; then
-            npm run tauri build -- --target universal-apple-darwin
+            npm run tauri build -- --target x86_64-apple-darwin
           else
             npm run tauri build
           fi

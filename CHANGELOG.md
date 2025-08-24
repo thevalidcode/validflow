@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.3](https://github.com/thevalidcode/validflow/compare/v1.5.2...v1.5.3) (2025-08-24)
+
+
+### Bug Fixes
+
+* updated build-app.yml ([ae9c22a](https://github.com/thevalidcode/validflow/commit/ae9c22ab5c021d035b587f0f25fabd7244afd9ee))
+
 ### [1.5.2](https://github.com/thevalidcode/validflow/compare/v1.5.0...v1.5.2) (2025-08-24)
 
 

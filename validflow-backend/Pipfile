@@ -9,6 +9,7 @@ uvicorn = "*"
 pyinstaller = "*"
 watchdog = "*"
 python-multipart = "*"
+sqlalchemy = "*"
 
 [dev-packages]
 

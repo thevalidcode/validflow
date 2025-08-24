@@ -6,6 +6,8 @@
   "permissions": [
     "core:default",
     "shell:default",
+    "fs:allow-read",
+    "fs:allow-write",
     {
       "identifier": "shell:allow-spawn",
       "allow": [
@@ -15,6 +17,11 @@
         }
       ]
     },
-    "shell:allow-open"
+    {
+      "identifier": "fs:scope",
+      "allow": ["$APPDATA/**", "$HOME/**"]
+    },
+    "shell:allow-open",
+    "fs:default"
   ]
 }

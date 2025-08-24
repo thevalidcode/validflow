@@ -13,7 +13,7 @@
     "paths": {
       "@/*": ["*"]
     },
-    "types": ["node"]
+    "types": ["node", "vite/client"]
   },
   "include": ["src"]
 }

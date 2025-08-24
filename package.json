@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"No tests defined. Please add test scripts.\" && exit 1",
-    "release": "standard-version && node update-tauri-version.js && git add validflow-frontend/src-tauri/Cargo.toml validflow-frontend/src-tauri/tauri.conf.json && git commit -m \"chore: sync version to Cargo.toml and tauri.conf.json\" && git push --follow-tags",
-    "dev:frontend": "cd validflow-frontend && npm run tauri dev",
+    "release": "standard-version --skip.tag && node update-tauri-version.js && git add package.json CHANGELOG.md validflow-frontend/src-tauri/Cargo.toml validflow-frontend/src-tauri/tauri.conf.json && git commit -m \"chore(release): bump version to $(node -p \"require('./package.json').version\")\" && git tag v$(node -p \"require('./package.json').version\") && git push --follow-tags",
+    "dev:frontend:tauri": "cd validflow-frontend && npm run tauri dev",
+    "dev:frontend": "cd validflow-frontend && npm run dev",
     "dev:backend": "cd validflow-backend && uvicorn app.main:app --reload",
+    "dev:tauri": "concurrently -n FRONTEND,BACKEND -c green,blue \"npm run dev:frontend tauri\" \"npm run dev:backend\"",
     "dev": "concurrently -n FRONTEND,BACKEND -c green,blue \"npm run dev:frontend\" \"npm run dev:backend\""
   },
   "keywords": [

@@ -14,14 +14,20 @@ import {
   HelpCircle,
   Zap,
 } from "lucide-react";
-import { startBackend } from "../backend";
+import { startBackend, stopBackend, backendProcess } from "../backend";
+import RuleBuilder from "../components/RuleBuilder";
 import { useState } from "react";
+import ErrorLogs from "@/components/ErrorLogs";
 
 const LandingPage = () => {
-  const [backendStarted, setBackendStarted] = useState(false);
+  const [showRules, setShowRules] = useState(false);
+  const [showLogs, setShowLogs] = useState(false);
   const startBackendAsync = async () => {
-    setBackendStarted(true);
-    await startBackend();
+    if (backendProcess) {
+      await stopBackend();
+    } else {
+      await startBackend();
+    }
   };
 
   return (
@@ -44,15 +50,46 @@ const LandingPage = () => {
           managing your documents intelligently — all while respecting your
           privacy.
         </p>
-        <button
-          type="button"
-          onClick={startBackendAsync}
-          className="bg-yellow-300 rounded-xl px-6 py-3 text-yellow-900 font-semibold shadow-[8px_8px_16px_#d6b54c,-8px_-8px_16px_#ffffd4] hover:scale-105 transition-transform"
-        >
-          Launch ValidFlow
-        </button>
+        <div className="flex gap-4">
+          <button
+            type="button"
+            onClick={startBackendAsync}
+            className={`relative px-6 py-3 font-bold rounded-xl text-white shadow-[8px_8px_16px_#d6b54c,-8px_-8px_16px_#ffffd4] 
+      bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500
+      transform transition-all duration-300 
+      hover:scale-105 hover:shadow-[4px_4px_8px_#d6b54c,-4px_-4px_8px_#ffffd4] 
+      active:translate-y-1 active:shadow-[2px_2px_4px_#d6b54c,-2px_-2px_4px_#ffffd4]`}
+          >
+            {backendProcess ? "Stop ValidFlow" : "Launch ValidFlow"}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setShowRules(true)}
+            className={`relative px-6 py-3 font-semibold rounded-xl text-yellow-900 border-2 border-yellow-300
+      bg-white bg-gradient-to-tr from-white via-yellow-50 to-white
+      transform transition-all duration-300 
+      hover:scale-105 hover:shadow-[4px_4px_12px_rgba(0,0,0,0.1)] 
+      active:translate-y-1 active:shadow-[2px_2px_6px_rgba(0,0,0,0.1)]`}
+          >
+            Build Rules
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setShowLogs(true)}
+            className={`relative px-6 py-3 font-semibold rounded-xl text-yellow-900 border-2 border-yellow-300
+      bg-white bg-gradient-to-tr from-white via-yellow-50 to-white
+      transform transition-all duration-300 
+      hover:scale-105 hover:shadow-[4px_4px_12px_rgba(0,0,0,0.1)] 
+      active:translate-y-1 active:shadow-[2px_2px_6px_rgba(0,0,0,0.1)]`}
+          >
+            View Error Logs
+          </button>
+        </div>
+
         <div className="mt-6 text-green-600 font-semibold text-sm">
-          {backendStarted &&
+          {backendProcess &&
             "✅ ValidFlow is now working silently in the background."}
         </div>
       </section>
@@ -189,6 +226,9 @@ const LandingPage = () => {
           Start Now
         </button>
       </section>
+
+      {showRules && <RuleBuilder onClose={() => setShowRules(false)} />}
+      {showLogs && <ErrorLogs onClose={() => setShowLogs(false)} />}
     </div>
   );
 };

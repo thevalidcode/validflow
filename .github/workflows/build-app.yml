@@ -73,14 +73,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-
       - name: Install required dependencies on Windows
         if: runner.os == 'Windows'
         run: |
@@ -90,8 +82,8 @@ jobs:
       - name: Install required dependencies on macOS
         if: runner.os == 'macOS'
         run: |
+          rustup target add aarch64-apple-darwin
           rustup target add x86_64-apple-darwin
-          xcode-select --install || true
 
       - name: Install required dependencies on Ubuntu
         if: runner.os == 'Linux'
@@ -107,7 +99,16 @@ jobs:
 
       - name: Make Backend Executable (non-Windows)
         if: runner.os != 'Windows'
-        run: chmod +x validflow-frontend/src-tauri/bin/start-*
+        run: |
+          chmod +x validflow-frontend/src-tauri/bin/start-*
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
 
       - name: Install Frontend Dependencies
         working-directory: validflow-frontend
@@ -117,21 +118,9 @@ jobs:
         working-directory: validflow-frontend
         run: npm run build
 
-      - name: Fix DMG script permissions (macOS only)
-        if: runner.os == 'macOS'
-        run: chmod +x validflow-frontend/src-tauri/target/release/bundle/dmg/bundle_dmg.sh || true
-
       - name: Build Tauri App
         working-directory: validflow-frontend
-        env:
-          TAURI_SIGNING_PRIVATE_KEY: "" # Empty for unsigned build
-          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ""
-        run: |
-          if [ "${{ runner.os }}" == "macOS" ]; then
-            npm run tauri build -- --target x86_64-apple-darwin
-          else
-            npm run tauri build
-          fi
+        run: npm run tauri build
 
       - name: Upload Release Artifacts
         uses: softprops/action-gh-release@v2
